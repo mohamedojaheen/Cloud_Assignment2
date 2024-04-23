@@ -1,8 +1,9 @@
-FROM python:3.8
-WORKDIR /app
-COPY . /app
-EXPOSE 8888
-ENV NAME World
-RUN pip install jupyter
+FROM jupyter/datascience-notebook
+
 RUN pip install pandas
-CMD ["jupyter", "notebook", "--ip='0.0.0.0'", "--port=8888", "--no-browser", "--allow-root"]
+
+COPY analysis.ipynb /home/jovyan/work/
+
+WORKDIR /home/jovyan/work
+
+CMD ["jupyter", "notebook", "--ip='0.0.0.0'", "--port=8888", "--no-browser", "--allow-root", "--NotebookApp.default_url=/notebooks/analysis.ipynb"]
